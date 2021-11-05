@@ -1,0 +1,49 @@
+name: Sourcegraph Rust LSIF Indexer
+description: Generate LSIF data from Rust source code
+author: Sourcegraph
+branding:
+  icon: code
+  color: purple
+
+inputs:
+  project_root:
+    description: The root of the repository. There must be at least one Cargo.toml file at the root or in some (transitive) subdirectory.
+    default: .
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout lsif-rust-action
+      uses: actions/checkout@v2
+    - name: Download rust-analyzer
+      shell: python
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        import os
+        action_path = os.environ['ACTION_PATH']
+        old_wd = os.getcwd()
+        os.chdir(action_path)
+        with open("download-rust-analyzer.py") as f:
+            code = compile(f.read(), "download-rust-analyzer.py", 'exec')
+            exec(code, None, None)
+        os.chdir(old_wd)
+    - name: Create LSIF index
+      shell: python
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        PROJECT_ROOT: ${{ inputs.project_root }}
+      run: |
+        import subprocess
+        import os
+        rust_analyzer_path = "rust-analyzer"
+        if os.environ["RUNNER_OS"] == "Windows":
+            rust_analyzer_path += ".exe"
+        rust_analyzer_path = os.path.join(os.environ["ACTION_PATH"], rust_analyzer_path)
+        CWD = os.getcwd()
+        try:
+            project_dir = os.environ["PROJECT_ROOT"]
+        except KeyError:
+            project_dir = CWD
+        with open("dump.lsif", 'w') as lsif:
+            subprocess.run([rust_analyzer_path, "lsif", project_dir], stdout=lsif).check_returncode()
