@@ -36,4 +36,8 @@ jobs:
 
 ## Contributing
 
+If you run into issues using this GitHub Action,
+please [file an issue](https://github.com/sourcegraph/lsif-rust-action/issues),
+including relevant CI logs.
+
 Contributors should abide by the [Sourcegraph Code of Conduct](https://handbook.sourcegraph.com/community/code_of_conduct).
