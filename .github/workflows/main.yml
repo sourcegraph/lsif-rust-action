@@ -1,0 +1,14 @@
+on: [pull_request]
+
+jobs:
+  test_lsif_rust_action:
+    runs-on: ubuntu-latest
+    name: Check that LSIF Rust Action works as advertised.
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create LSIF data
+        uses: ./
+      - name: Upload LSIF data
+        uses: sourcegraph/lsif-upload-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
