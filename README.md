@@ -25,9 +25,9 @@ jobs:
   index:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Generate LSIF data
-        uses: sourcegraph/lsif-rust-action@v0.1.0
+        uses: sourcegraph/lsif-rust-action@main
       - name: Upload LSIF data
         uses: sourcegraph/lsif-upload-action@master
         with:
