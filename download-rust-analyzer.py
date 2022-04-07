@@ -61,7 +61,7 @@ def rust_analyzer_archive_url():
 
     ABI = abi_for_os(RUNNER_OS, libc)
     RUST_ANALYZER_ARCHIVE = ("rust-analyzer-{}-{}.gz".format(RUNNER_ARCH, ABI))
-    RUST_ANALYZER_RELEASE = "2021-11-01"
+    RUST_ANALYZER_RELEASE = "2022-03-21"
     return ("https://github.com/rust-analyzer/rust-analyzer/releases/download/{}/{}"
             .format(RUST_ANALYZER_RELEASE, RUST_ANALYZER_ARCHIVE))
 
