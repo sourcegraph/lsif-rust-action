@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Check that LSIF Rust Action works as advertised.
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
       - name: Create LSIF data
         uses: ./
       - name: Upload LSIF data
-        uses: sourcegraph/lsif-upload-action@master
+        uses: sourcegraph/lsif-upload-action@9fd43e6298eb70ca0213e481c4338689f3920f58 # master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
